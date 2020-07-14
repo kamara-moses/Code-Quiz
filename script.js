@@ -78,9 +78,8 @@ var penalty = 10;
 // Creates new element
 var choice = document.createElement('ul');
 
-// Triggers timer on button, shows user a display on the screen
+// starts the quiz and trigger the timer countdown
 startbutton.addEventListener("click", function () {
-    // We are checking zero because its originally set to zero
     if (timeInterval === 0) {
         timeInterval = setInterval(function () {
             secondsLeft--;
@@ -123,7 +122,7 @@ function compare(event) {
             createDiv.textContent = "Correct! The answer is:  " + questions[questionIndex].answer;
             // Correct condition 
         } else {
-            // Will deduct -5 seconds off secondsLeft for wrong answers
+            // Will deduct -10 seconds off secondsLeft for wrong answers
             secondsLeft = secondsLeft - penalty;
             createDiv.textContent = "Wrong! The correct answer is:  " + questions[questionIndex].answer;
         }
