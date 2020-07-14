@@ -69,11 +69,11 @@ var startbutton = document.querySelector('.startTime');
 var questions = document.querySelector('.questions');
 var container = document.querySelector('.container');
 
-// Seconds left is 15 seconds per question:
+// Seconds left is 50 seconds per quiz:
 var secondsLeft = 50;
-// Holds interval time
+// Time Interval time
 var timeInterval = 0;
-// Holds penalty time
+// Penalty time
 var penalty = 10;
 // Creates new element
 var choice = document.createElement('ul');
