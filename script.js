@@ -2,7 +2,12 @@
 var questions = [
     {
         title: 'What tag is used to define a list item (in a bulleted list)?',
-        answers: ['li','u','ul','ol'],
+        answers: {
+            a: 'li',
+            b: 'u',
+            c: 'ul',
+            d: 'ol',
+        },
         correctAnswer: 'li'
     },
 
@@ -54,7 +59,7 @@ var questions = [
 //start the game with a zero score
 var score = 0;
 
-//
+//question index
 var questionIndex = 0;
 
 // Start working code 
