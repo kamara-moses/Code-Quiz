@@ -1,5 +1,5 @@
-// arrays of questions for Code Quiz App
-var questions = [
+// arrays of questions for Quiz App
+var question = [
     {
         title: 'What tag is used to define a list item (in a bulleted list)?',
         answers: {
@@ -56,27 +56,24 @@ var questions = [
     }
 ];
 
-//start the game with a zero score
+//start the game with a zero score & questionIndex
 var score = 0;
+var questionIndex = 'questions';
 
-//question index
-var questionIndex = 0;
-
-// Start working code 
-// Declared variables
+// Variables
 var currentTime = document.querySelector('.currentTime');
 var startbutton = document.querySelector('.startTime');
 var questions = document.querySelector('.questions');
 var container = document.querySelector('.container');
 
-// Seconds left is 50 seconds per quiz:
+// 50 seconds per attempt for the quiz
 var secondsLeft = 50;
-// Time Interval time
+// Time Interval is set to zero
 var timeInterval = 0;
-// Penalty time
+// Incorrect answer take 10 seconds of the running clock as a penalty
 var penalty = 10;
 // Creates new element
-var choice = document.createElement('ul');
+var choices = document.createElement('choice');
 
 // starts the quiz and trigger the timer countdown
 startbutton.addEventListener("click", function () {
@@ -87,20 +84,20 @@ startbutton.addEventListener("click", function () {
 
             if (secondsLeft <= 0) {
                 clearInterval(timeInterval);
-                currentTime.textContent = 'Time up!';
+                currentTime.textContent = 'You ran out of time!';
             }
         }, 1000);
     }
-    renderquestions();
+    renderquestionIndex(questions);
 });
 
 
-// Renders questions and choices to page: 
-function renderquestions() {
+// Render the questions of the quiz to the page 
+function renderquestionIndex(questions) {
     // Clears existing data 
-    questions.innerHTML = "";
-    choice.innerHTML = "";
-    // loop through all info in array
+    questions.innerHTML = '';
+    choices.innerHTML = '';
+    // loop through all of the info in the array
     for (var i = 0; i < questions.length; i++) {
     
         var userQuestion = questions[questionIndex].title;
@@ -108,36 +105,4 @@ function renderquestions() {
         questions.textContent = userQuestion;
     }
 }
-    // Event to compare choices with answer
-function compare(event) {
-    var element = event.target;
-
-    if (element.matches("li")) {
-
-        var createDiv = document.createElement("div");
-        createDiv.setAttribute("id", "createDiv");
-        // Correct condition 
-        if (element.textContent == questions[questionIndex].answer) {
-            score++;
-            createDiv.textContent = "Correct! The answer is:  " + questions[questionIndex].answer;
-            // Correct condition 
-        } else {
-            // Will deduct -10 seconds off secondsLeft for wrong answers
-            secondsLeft = secondsLeft - penalty;
-            createDiv.textContent = "Wrong! The correct answer is:  " + questions[questionIndex].answer;
-        }
-
-    }
-    // Question Index determines number question user is on
-    questionIndex++;
-
-    if (questionIndex >= questions.length) {
-        // All done will append last page with user stats
-        allDone();
-        createDiv.textContent = "End of quiz!" + " " + "You got  " + score + "/" + questions.length + " Correct!";
-    } else {
-        render(questionIndex);
-    }
-    questions.appendChild(createDiv);
-
-}
+ 
