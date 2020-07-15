@@ -58,7 +58,7 @@ var question = [
 
 //start the game with a zero score & questionIndex
 var score = 0;
-var questionIndex = 'questions';
+var questionIndex = 0;
 
 // Variables
 var currentTime = document.querySelector('.currentTime');
@@ -73,7 +73,7 @@ var timeInterval = 0;
 // Incorrect answer take 10 seconds of the running clock as a penalty
 var penalty = 10;
 // Creates new element
-var choices = document.createElement('choice');
+var options = document.createElement('options');
 
 // starts the quiz and trigger the timer countdown
 startbutton.addEventListener("click", function () {
@@ -88,21 +88,30 @@ startbutton.addEventListener("click", function () {
             }
         }, 1000);
     }
-    renderquestionIndex(questions);
+    render(questionIndex);
 });
 
 
 // Render the questions of the quiz to the page 
-function renderquestionIndex(questions) {
+function render(questionIndex) {
     // Clears existing data 
     questions.innerHTML = '';
-    choices.innerHTML = '';
+    options.innerHTML = '';
     // loop through all of the info in the array
-    for (var i = 0; i < questions.length; i++) {
+    for (var i = 0; i < question.length; i++) {
     
-        var userQuestion = questions[questionIndex].title;
-        var userChoices = questions[questionIndex].choices;
+        var userQuestion = question[questionIndex].title;
+        var userChoices = question[questionIndex].choices;
         questions.textContent = userQuestion;
     }
+
+    userChoices.forEach(function (newItem) {
+        var listItem = document.createElement("li");
+        listItem.textContent = newItem;
+        questions.appendChild(options);
+        options.appendChild(listItem);
+        listItem.addEventListener("click", (compare));
+    })
 }
+
  
