@@ -99,19 +99,33 @@ function render(questionIndex) {
     options.innerHTML = '';
     // loop through all of the info in the array
     for (var i = 0; i < question.length; i++) {
-    
+
         var userQuestion = question[questionIndex].title;
-        var userChoices = question[questionIndex].choices;
+        var userChoices = question[questionIndex].answers;
         questions.textContent = userQuestion;
     }
-
-    userChoices.forEach(function (newItem) {
+    for (var [key, value] of Object.entries(userChoices)) {
         var listItem = document.createElement("li");
-        listItem.textContent = newItem;
+        listItem.textContent = questions;
         questions.appendChild(options);
         options.appendChild(listItem);
         listItem.addEventListener("click", (compare));
-    })
+    }
 }
+function compare(event) {
+    var element = event.target;
 
- 
+    if (element.matches("li")) {
+
+        if (element.textContent == questions[questionIndex].answer) {
+            score++;
+
+        } else {
+            secondsLeft = secondsLeft - penalty;
+        }
+    }
+}
+questionIndex++;
+
+
+
