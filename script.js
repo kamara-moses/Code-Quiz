@@ -106,7 +106,7 @@ function render(questionIndex) {
     }
     for (var [key, value] of Object.entries(userChoices)) {
         var listItem = document.createElement("li");
-        listItem.textContent = questions;
+        listItem.textContent = value;
         questions.appendChild(options);
         options.appendChild(listItem);
         listItem.addEventListener("click", (compare));

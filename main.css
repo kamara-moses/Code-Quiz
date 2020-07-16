@@ -67,5 +67,6 @@ li {
     color: white;
     text-align: center;
     margin-left: 20px;
+    list-style-type: none;
 }
 
