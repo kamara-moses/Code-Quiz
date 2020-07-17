@@ -2,7 +2,7 @@
 var question = [
     {
         title: 'What tag is used to define a list item (in a bulleted list)?',
-        answers: {
+      answers: {
             a: 'li',
             b: 'u',
             c: 'ul',
@@ -13,52 +13,53 @@ var question = [
 
     {
         title: 'What tag is used to render or transform text into an important (bold) version?',
-        answers: {
+      answers: {
             a: 'a',
             b: 'em',
             c: 'bold',
             d: 'strong',
         },
-        correctAnswer: 'd'
+        correctAnswer: 'strong'
     },
 
     {
         title: 'What tag is required in all HTML documents, and is used to define the title?',
-        answers: {
+      answers: {
             a: 'title',
             b: 'head',
             c: 'br',
             d: 'body',
         },
-        correctAnswer: 'a'
+        correctAnswer: 'title'
     },
 
     {
         title: 'What tag is used to define a standard cell inside a table?',
-        answers: {
+      answers: {
             a: 'hr',
             b: 'h1',
             c: 'footer',
             d: 'td',
         },
-        correctAnswer: 'd'
+        correctAnswer: 'td'
     },
 
     {
         title: 'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
-        answers: {
+      answers: {
             a: 'Arrays',
             b: 'Strings',
             c: 'Variables',
             d: 'Recorder',
         },
-        correctAnswer: 'b'
+        correctAnswer: 'Strings'
     }
 ];
 
 //start the game with a zero score & questionIndex
 var score = 0;
 var questionIndex = 0;
+var nextQuestion;
 
 // Variables
 var currentTime = document.querySelector('.currentTime');
@@ -67,9 +68,9 @@ var questions = document.querySelector('.questions');
 var container = document.querySelector('.container');
 
 // 50 seconds per attempt for the quiz
-var secondsLeft = 50;
+var secondsLeft = 15;
 // Time Interval is set to zero
-var timeInterval = 0;
+var timeOut = 0;
 // Incorrect answer take 10 seconds of the running clock as a penalty
 var penalty = 10;
 // Creates new element
@@ -77,27 +78,30 @@ var options = document.createElement('options');
 
 // starts the quiz and trigger the timer countdown
 startbutton.addEventListener("click", function () {
-    if (timeInterval === 0) {
-        timeInterval = setInterval(function () {
+    render(questionIndex);
+    if (secondsLeft) {
+        timeOut = setInterval(function () {
             secondsLeft--;
             currentTime.textContent = `Time: ${secondsLeft}`;
-
-            if (secondsLeft <= 0) {
-                clearInterval(timeInterval);
+            if (questionIndex >= question.length ) {
+                clearInterval(timeOut);
+                currentTime.textContent = 'End Quiz!';
+            }
+            if (secondsLeft === 0) {
+                clearInterval(timeOut);
                 currentTime.textContent = 'You ran out of time!';
             }
         }, 1000);
     }
-    render(questionIndex);
 });
 
 
 // Render the questions of the quiz to the page 
 function render(questionIndex) {
-    // Clears existing data 
+    // Clears the page to render the questions 
     questions.innerHTML = '';
     options.innerHTML = '';
-    // loop through all of the info in the array
+    // loops through all of the info in the array
     for (var i = 0; i < question.length; i++) {
 
         var userQuestion = question[questionIndex].title;
@@ -109,23 +113,19 @@ function render(questionIndex) {
         listItem.textContent = value;
         questions.appendChild(options);
         options.appendChild(listItem);
-        listItem.addEventListener("click", (compare));
+        listItem.addEventListener('click', checkAnswer)
     }
 }
-function compare(event) {
-    var element = event.target;
-
-    if (element.matches("li")) {
-
-        if (element.textContent == questions[questionIndex].answer) {
-            score++;
-
-        } else {
-            secondsLeft = secondsLeft - penalty;
-        }
+//worked with TA to move the quiz to the next question upon userInput
+function checkAnswer(event) {
+    var userValue = event.target.textContent;
+    if (userValue === question[questionIndex].correctAnswer) {
+        questionIndex++;
+        render(questionIndex);
+    } else {
+        secondsLeft = secondsLeft - penalty;
     }
+    score += secondsLeft;
 }
-questionIndex++;
-
 
 
