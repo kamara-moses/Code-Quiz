@@ -126,6 +126,19 @@ function checkAnswer(event) {
         secondsLeft = secondsLeft - penalty;
     }
     score += secondsLeft;
+
+    setScore();
+}
+function setScore () {
+    var highScore = 
+    score += secondsLeft;
+    localStorage.setItem('score', score);
+    console.log(highScore);
+}
+render(highScore);
+
+function renderhighScore() {
+    var highScore = localStorage.getItem(highscore);
 }
 
 
