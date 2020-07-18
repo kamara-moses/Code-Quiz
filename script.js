@@ -25,8 +25,8 @@ var question = [
     {
         title: 'What tag is required in all HTML documents, and is used to define the title?',
       answers: {
-            a: 'title',
-            b: 'head',
+            a: 'head',
+            b: 'title',
             c: 'br',
             d: 'body',
         },
@@ -38,8 +38,8 @@ var question = [
       answers: {
             a: 'hr',
             b: 'h1',
-            c: 'footer',
-            d: 'td',
+            c: 'td',
+            d: 'footer',
         },
         correctAnswer: 'td'
     },
@@ -68,7 +68,7 @@ var questions = document.querySelector('.questions');
 var container = document.querySelector('.container');
 
 // 50 seconds per attempt for the quiz
-var secondsLeft = 15;
+var secondsLeft = 50;
 // Time Interval is set to zero
 var timeOut = 0;
 // Incorrect answer take 10 seconds of the running clock as a penalty
@@ -86,6 +86,7 @@ startbutton.addEventListener("click", function () {
             if (questionIndex >= question.length ) {
                 clearInterval(timeOut);
                 currentTime.textContent = 'End Quiz!';
+                endQuiz();
             }
             if (secondsLeft === 0) {
                 clearInterval(timeOut);
@@ -94,7 +95,6 @@ startbutton.addEventListener("click", function () {
         }, 1000);
     }
 });
-
 
 // Render the questions of the quiz to the page 
 function render(questionIndex) {
@@ -122,23 +122,83 @@ function checkAnswer(event) {
     if (userValue === question[questionIndex].correctAnswer) {
         questionIndex++;
         render(questionIndex);
+        displayMessahe('Correct Answer');
     } else {
         secondsLeft = secondsLeft - penalty;
+        questionIndex++;
+        render(questionIndex);
+        displayMessage('Wrong Answer')
     }
-    score += secondsLeft;
-
-    setScore();
+    score += secondsLeft
 }
-function setScore () {
-    var highScore = 
-    score += secondsLeft;
-    localStorage.setItem('score', score);
-    console.log(highScore);
+function endQuiz() {
+    questions.innerHTML = '';
+    currentTime.innerHTML = '';
+
+    // Heading:
+    var generateH1 = document.createElement('h1');
+    generateH1.setAttribute('class', 'generateH1');
+    generateH1.textContent = 'End Qiuz!'
+
+    questions.appendChild(generateH1);
+
+    // Paragraph
+    var generateP = document.createElement('p');
+    generateP.setAttribute('class', 'generateP');
+
+    questions.appendChild(generateP);
+
+// Calculates time remaining and replaces it with score
+    if (score += secondsLeft) {
+    
+    var generateP2 = document.createElement("p");
+    generateP.textContent = "Your Score: " + score;
+
+    questions.appendChild(generateP2);
+    }
+
+    // Label for initials input
+    var generateLabel = document.createElement("label");
+    generateLabel.setAttribute('class', 'generateLabel');
+    generateLabel.textContent = 'Users Initials: ';
+
+    questions.appendChild(generateLabel);
+
+    // Input
+    var generateInput = document.createElement('input');
+    generateInput.setAttribute('type', 'text');
+    generateInput.setAttribute('class', 'initials');
+    generateInput.textContent = '';
+
+    questions.appendChild(generateInput);
+
+    // Submit
+    var generateSubmit = document.createElement('button');
+    generateSubmit.setAttribute('type', 'class', 'submit');
+    generateSubmit.textContent = 'Save Score';
+
+    questions.appendChild(generateSubmit);
+
+    // Initials and local storage for initials and score
+    generateSubmit.addEventListener("click", function () {
+        var initials = generateInput.value;
+
+        if (initials === '') {
+
+        } else {
+            var finalscore = {
+                initials: initials,
+                score: score
+            }
+            var highScores = localStorage.getItem('highScores');
+            if (highScores === '') {
+                highScores = [];
+            } else {
+                highScores = JSON.parse(highScores);
+            }
+            highScores.push(finalscore);
+            var newScore = JSON.stringify(highScores);
+            localStorage.setItem('highScores', newScore);
+        }
+    });
 }
-render(highScore);
-
-function renderhighScore() {
-    var highScore = localStorage.getItem(highscore);
-}
-
-

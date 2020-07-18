@@ -11,6 +11,7 @@ body {
     font-size: 16px;
     background-color: rosybrown;
 }
+
 .container {
     width: 500px;
     height: 500px;
@@ -23,10 +24,6 @@ body {
 
 .currentTime {
     float: right;
-}
-.scores {
-    font-family: fantasy;
-    color: red;
 }
 
 .questions {
@@ -49,15 +46,16 @@ body {
     margin: 10px;
 }
 
-.startTime{
+.startTime, button{
     background-color: rgb(147, 195, 240);
-    margin-left: 33%;
+    margin-left: 29%;
     margin-top: 10px;
     padding: 15px 32px;
     font-size: 20px;
     color: white;
     border-radius: 20px;
 }
+
 li {
     background-color:rosybrown;
     margin-top: 10px;
@@ -69,4 +67,15 @@ li {
     margin-left: 20px;
     list-style-type: none;
 }
+
+input {
+    margin-bottom: 20px;
+    margin-left: 0px;
+    width: 29%;
+    border: 1px solid rgb(188, 143, 143);
+}
+.generateLabel {
+    margin-left: 70px;
+}
+ 
 
