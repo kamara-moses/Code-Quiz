@@ -122,12 +122,10 @@ function checkAnswer(event) {
     if (userValue === question[questionIndex].correctAnswer) {
         questionIndex++;
         render(questionIndex);
-        displayMessahe('Correct Answer');
     } else {
         secondsLeft = secondsLeft - penalty;
         questionIndex++;
         render(questionIndex);
-        displayMessage('Wrong Answer')
     }
     score += secondsLeft
 }
