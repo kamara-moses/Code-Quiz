@@ -177,24 +177,23 @@ function endQuiz() {
 
     questions.appendChild(generateSubmit);
 
-    // Initials and local storage for initials and score
-    generateSubmit.addEventListener("click", function () {
+    generateSubmit.addEventListener('click', function () {
         var initials = generateInput.value;
 
         if (initials === '') {
-
+            alert('Please Enter Initials');
         } else {
-            var finalscore = {
+            var totalScore = {
                 initials: initials,
                 score: score
             }
-            var highScores = localStorage.getItem('highScores');
-            if (highScores === '') {
+            var highScores = localStorage.getItem("highScores");
+            if (highScores === null) {
                 highScores = [];
             } else {
                 highScores = JSON.parse(highScores);
             }
-            highScores.push(finalscore);
+            highScores.push(totalScore);
             var newScore = JSON.stringify(highScores);
             localStorage.setItem('highScores', newScore);
         }
