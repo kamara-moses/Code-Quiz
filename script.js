@@ -120,10 +120,12 @@ function render(questionIndex) {
 function checkAnswer(event) {
     var userValue = event.target.textContent;
     if (userValue === question[questionIndex].correctAnswer) {
+        question.textContent = 'Correct Answer';
         questionIndex++;
         render(questionIndex);
     } else {
         secondsLeft = secondsLeft - penalty;
+        question.textContent = 'Wrong Answer';
         questionIndex++;
         render(questionIndex);
     }
@@ -187,13 +189,10 @@ function endQuiz() {
                 initials: initials,
                 score: score
             }
-            var highScores = localStorage.getItem("highScores");
+            var highScores = JSON.parse(localStorage.getItem('highScores'));
             if (highScores === null) {
                 highScores = [];
-            } else {
-                highScores = JSON.parse(highScores);
-            }
-            highScores.push(totalScore);
+            } highScores.push(totalScore);
             var newScore = JSON.stringify(highScores);
             localStorage.setItem('highScores', newScore);
         }
