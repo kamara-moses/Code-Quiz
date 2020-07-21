@@ -77,7 +77,7 @@ var penalty = 10;
 var options = document.createElement('options');
 
 // starts the quiz and trigger the timer countdown
-startbutton.addEventListener("click", function () {
+startbutton.addEventListener('click', function () {
     render(questionIndex);
     if (secondsLeft) {
         timeOut = setInterval(function () {
@@ -128,6 +128,7 @@ function checkAnswer(event) {
         question.textContent = 'Wrong Answer';
         questionIndex++;
         render(questionIndex);
+
     }
     score += secondsLeft
 }
@@ -175,7 +176,7 @@ function endQuiz() {
     // Submit
     var generateSubmit = document.createElement('button');
     generateSubmit.setAttribute('type', 'class', 'submit');
-    generateSubmit.textContent = 'Save Score';
+    generateSubmit.textContent = 'Save';
 
     questions.appendChild(generateSubmit);
 
@@ -192,9 +193,21 @@ function endQuiz() {
             var highScores = JSON.parse(localStorage.getItem('highScores'));
             if (highScores === null) {
                 highScores = [];
-            } highScores.push(totalScore);
+            } 
+            highScores.push(totalScore);
             var newScore = JSON.stringify(highScores);
             localStorage.setItem('highScores', newScore);
         }
+        var generateBtn = document.createElement('button');
+            generateBtn.setAttribute('class', 'retry');
+            generateBtn.textContent = 'Retry';
+
+            questions.appendChild(generateBtn);
+        
+        generateBtn.addEventListener('click', function () {
+            question.innerHTML = '';
+            currentTime.innerHTML = '';
+            render(questionIndex);
+        })
     });
 }
