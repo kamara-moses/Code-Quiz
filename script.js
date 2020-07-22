@@ -2,7 +2,7 @@
 var question = [
     {
         title: 'What tag is used to define a list item (in a bulleted list)?',
-      answers: {
+        answers: {
             a: 'li',
             b: 'u',
             c: 'ul',
@@ -13,7 +13,7 @@ var question = [
 
     {
         title: 'What tag is used to render or transform text into an important (bold) version?',
-      answers: {
+        answers: {
             a: 'a',
             b: 'em',
             c: 'bold',
@@ -24,7 +24,7 @@ var question = [
 
     {
         title: 'What tag is required in all HTML documents, and is used to define the title?',
-      answers: {
+        answers: {
             a: 'head',
             b: 'title',
             c: 'br',
@@ -35,7 +35,7 @@ var question = [
 
     {
         title: 'What tag is used to define a standard cell inside a table?',
-      answers: {
+        answers: {
             a: 'hr',
             b: 'h1',
             c: 'td',
@@ -46,7 +46,7 @@ var question = [
 
     {
         title: 'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
-      answers: {
+        answers: {
             a: 'Arrays',
             b: 'Strings',
             c: 'Variables',
@@ -60,6 +60,7 @@ var question = [
 var score = 0;
 var questionIndex = 0;
 var nextQuestion;
+var numCorrect = 0;
 
 // Variables
 var currentTime = document.querySelector('.currentTime');
@@ -83,7 +84,7 @@ startbutton.addEventListener('click', function () {
         timeOut = setInterval(function () {
             secondsLeft--;
             currentTime.textContent = `Time: ${secondsLeft}`;
-            if (questionIndex >= question.length ) {
+            if (questionIndex >= question.length) {
                 clearInterval(timeOut);
                 currentTime.textContent = 'End Quiz!';
                 endQuiz();
@@ -120,15 +121,13 @@ function render(questionIndex) {
 function checkAnswer(event) {
     var userValue = event.target.textContent;
     if (userValue === question[questionIndex].correctAnswer) {
-        question.textContent = 'Correct Answer';
         questionIndex++;
+        numCorrect++;
         render(questionIndex);
     } else {
         secondsLeft = secondsLeft - penalty;
-        question.textContent = 'Wrong Answer';
         questionIndex++;
         render(questionIndex);
-
     }
     score += secondsLeft
 }
@@ -149,15 +148,28 @@ function endQuiz() {
 
     questions.appendChild(generateP);
 
-// Calculates time remaining and replaces it with score
+    // Calculates time remaining and replaces it with score
     if (score += secondsLeft) {
-    
-    var generateP2 = document.createElement("p");
-    generateP.textContent = "Your Score: " + score;
 
-    questions.appendChild(generateP2);
+        var generateP2 = document.createElement('p');
+        generateP.textContent = 'Your Score: ' + score;
+
+        questions.appendChild(generateP2);
+
     }
+    var generateP = document.createElement('p');
+    generateP.setAttribute('class', 'generateP');
 
+    questions.appendChild(generateP);
+
+    if (score += secondsLeft) {
+        var generateP3 = document.createElement('p');
+        generateP.textContent = `${numCorrect} out of ${question.length}`;
+
+        questions.appendChild(generateP);
+
+
+    }
     // Label for initials input
     var generateLabel = document.createElement("label");
     generateLabel.setAttribute('class', 'generateLabel');
@@ -193,21 +205,38 @@ function endQuiz() {
             var highScores = JSON.parse(localStorage.getItem('highScores'));
             if (highScores === null) {
                 highScores = [];
-            } 
+            }
             highScores.push(totalScore);
             var newScore = JSON.stringify(highScores);
             localStorage.setItem('highScores', newScore);
         }
         var generateBtn = document.createElement('button');
-            generateBtn.setAttribute('class', 'retry');
-            generateBtn.textContent = 'Retry';
+        generateBtn.setAttribute('class', 'retry');
+        generateBtn.textContent = 'Retry';
 
-            questions.appendChild(generateBtn);
-        
-        generateBtn.addEventListener('click', function () {
-            question.innerHTML = '';
-            currentTime.innerHTML = '';
-            render(questionIndex);
-        })
-    });
-}
+        questions.appendChild(generateBtn);
+
+            generateBtn.addEventListener('click', function () {
+                questionIndex = 0;
+                secondsLeft = 50;
+                score = 0;
+                numCorrect = 0;
+                render(questionIndex);
+                if (secondsLeft) {
+                    timeOut = setInterval(function () {
+                        secondsLeft--;
+                        currentTime.textContent = `Time: ${secondsLeft}`;
+                        if (questionIndex >= question.length) {
+                            clearInterval(timeOut);
+                            currentTime.textContent = 'End Quiz!';
+                            endQuiz();
+                        }
+                        if (secondsLeft === 0) {
+                            clearInterval(timeOut);
+                            currentTime.textContent = 'You ran out of time!';
+                    }
+                }, 1000);
+            }
+        }
+    )}
+)};
