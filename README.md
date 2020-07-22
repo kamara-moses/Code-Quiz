@@ -32,3 +32,5 @@ The score is a combination of the amount of correct answer plus the time remaini
 used the numCorrect++ to store the number of questions the user got right.
 the user will also be presented with how many questions they got right out of the total questionIndex.
 The user have an option to save the score with initials to the localstorage.
+After saving the score, the user will see the retry button that will allow them to take the quiz again to improve their score.
+The Retry button will reset the quiz back to it 0 for score, questionIndex, numCorrect and set the secondsLeft back to 50.
