@@ -1,87 +1,86 @@
 // arrays of questions for Quiz App
-var question = [
-    {
-        title: 'What tag is used to define a list item (in a bulleted list)?',
-        answers: {
-            a: 'li',
-            b: 'u',
-            c: 'ul',
-            d: 'ol',
-        },
-        correctAnswer: 'li'
+const question = [{
+    title: 'What tag is used to define a list item (in a bulleted list)?',
+    answers: {
+        a: 'li',
+        b: 'u',
+        c: 'ul',
+        d: 'ol',
     },
+    correctAnswer: 'li'
+},
 
-    {
-        title: 'What tag is used to render or transform text into an important (bold) version?',
-        answers: {
-            a: 'a',
-            b: 'em',
-            c: 'bold',
-            d: 'strong',
-        },
-        correctAnswer: 'strong'
+{
+    title: 'What tag is used to render or transform text into an important (bold) version?',
+    answers: {
+        a: 'a',
+        b: 'em',
+        c: 'bold',
+        d: 'strong',
     },
+    correctAnswer: 'strong'
+},
 
-    {
-        title: 'What tag is required in all HTML documents, and is used to define the title?',
-        answers: {
-            a: 'head',
-            b: 'title',
-            c: 'br',
-            d: 'body',
-        },
-        correctAnswer: 'title'
+{
+    title: 'What tag is required in all HTML documents, and is used to define the title?',
+    answers: {
+        a: 'head',
+        b: 'title',
+        c: 'br',
+        d: 'body',
     },
+    correctAnswer: 'title'
+},
 
-    {
-        title: 'What tag is used to define a standard cell inside a table?',
-        answers: {
-            a: 'hr',
-            b: 'h1',
-            c: 'td',
-            d: 'footer',
-        },
-        correctAnswer: 'td'
+{
+    title: 'What tag is used to define a standard cell inside a table?',
+    answers: {
+        a: 'hr',
+        b: 'h1',
+        c: 'td',
+        d: 'footer',
     },
+    correctAnswer: 'td'
+},
 
-    {
-        title: 'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
-        answers: {
-            a: 'Arrays',
-            b: 'Strings',
-            c: 'Variables',
-            d: 'Recorder',
-        },
-        correctAnswer: 'Strings'
-    }
+{
+    title: 'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
+    answers: {
+        a: 'Arrays',
+        b: 'Strings',
+        c: 'Variables',
+        d: 'Recorder',
+    },
+    correctAnswer: 'Strings'
+}
 ];
 
 //start the game with a zero score & questionIndex
-var score = 0;
-var questionIndex = 0;
-var nextQuestion;
-var numCorrect = 0;
+let score = 0;
+let questionIndex = 0;
+let nextQuestion;
+let numCorrect = 0;
 
 // Variables
-var currentTime = document.querySelector('.currentTime');
-var startbutton = document.querySelector('.startTime');
-var questions = document.querySelector('.questions');
-var container = document.querySelector('.container');
+const currentTime = document.querySelector('.currentTime');
+const startbutton = document.querySelector('.startTime');
+const questions = document.querySelector('.questions');
+const container = document.querySelector('.container');
 
 // 50 seconds per attempt for the quiz
-var secondsLeft = 50;
+let secondsLeft = 50;
 // Time Interval is set to zero
-var timeOut = 0;
+let timeOut = 0;
 // Incorrect answer take 10 seconds of the running clock as a penalty
-var penalty = 10;
+let penalty = 10;
 // Creates new element
-var options = document.createElement('options');
+const options = document.createElement('options');
 
 // starts the quiz and trigger the timer countdown
-startbutton.addEventListener('click', function () {
+startbutton.addEventListener('click', () => {
     render(questionIndex);
     if (secondsLeft) {
-        timeOut = setInterval(function () {
+        timeOut = setInterval(() => {
             secondsLeft--;
             currentTime.textContent = `Time: ${secondsLeft}`;
             if (questionIndex >= question.length) {
@@ -110,7 +109,7 @@ function render(questionIndex) {
         questions.textContent = userQuestion;
     }
     for (var [key, value] of Object.entries(userChoices)) {
-        var listItem = document.createElement("li");
+        var listItem = document.createElement('li');
         listItem.textContent = value;
         questions.appendChild(options);
         options.appendChild(listItem);
@@ -131,6 +130,7 @@ function checkAnswer(event) {
     }
     score += secondsLeft
 }
+
 function endQuiz() {
     questions.innerHTML = '';
     currentTime.innerHTML = '';
@@ -216,27 +216,27 @@ function endQuiz() {
 
         questions.appendChild(generateBtn);
 
-            generateBtn.addEventListener('click', function () {
-                questionIndex = 0;
-                secondsLeft = 50;
-                score = 0;
-                numCorrect = 0;
-                render(questionIndex);
-                if (secondsLeft) {
-                    timeOut = setInterval(function () {
-                        secondsLeft--;
-                        currentTime.textContent = `Time: ${secondsLeft}`;
-                        if (questionIndex >= question.length) {
-                            clearInterval(timeOut);
-                            currentTime.textContent = 'End Quiz!';
-                            endQuiz();
-                        }
-                        if (secondsLeft === 0) {
-                            clearInterval(timeOut);
-                            currentTime.textContent = 'You ran out of time!';
+        generateBtn.addEventListener('click', function () {
+            questionIndex = 0;
+            secondsLeft = 50;
+            score = 0;
+            numCorrect = 0;
+            render(questionIndex);
+            if (secondsLeft) {
+                timeOut = setInterval(function () {
+                    secondsLeft--;
+                    currentTime.textContent = `Time: ${secondsLeft}`;
+                    if (questionIndex >= question.length) {
+                        clearInterval(timeOut);
+                        currentTime.textContent = 'End Quiz!';
+                        endQuiz();
+                    }
+                    if (secondsLeft === 0) {
+                        clearInterval(timeOut);
+                        currentTime.textContent = 'You ran out of time!';
                     }
                 }, 1000);
             }
-        }
-    )}
-)};
+        })
+    });
+};
