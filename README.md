@@ -28,5 +28,9 @@ Once the start button is clicked, the user is presented with the questions in th
 If the user chooses the right answer the quiz moves to the next answer with question++.
 if the user chooses the wrong answer the quiz deducted 10 seconds of the clock and move to the next question with question++.
 After presenting all the questions and receiving the users inputs the quiz ends and displays the score.
-The score is a combination of the amount of correct answer plus the timeremaining on the clock.
+The score is a combination of the amount of correct answer plus the time remaining on the clock.
+used the numCorrect++ to store the number of questions the user got right.
+the user will also be presented with how many questions they got right out of the total questionIndex.
 The user have an option to save the score with initials to the localstorage.
+After saving the score, the user will see the retry button that will allow them to take the quiz again to improve their score.
+The Retry button will reset the quiz back to it 0 for score, questionIndex, numCorrect and set the secondsLeft back to 50.
