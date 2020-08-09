@@ -12,6 +12,10 @@ body {
     background-color: rosybrown;
 }
 
+.highscore {
+    color: white;
+    font-family: fantasy;
+}
 .container {
     width: 500px;
     height: 500px;

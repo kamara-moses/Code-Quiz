@@ -66,6 +66,7 @@ const currentTime = document.querySelector('.currentTime');
 const startbutton = document.querySelector('.startTime');
 const questions = document.querySelector('.questions');
 const container = document.querySelector('.container');
+const highscore = document.querySelector('.highscore')
 
 // 50 seconds per attempt for the quiz
 let secondsLeft = 50;
@@ -97,7 +98,7 @@ startbutton.addEventListener('click', () => {
 });
 
 // Render the questions of the quiz to the page 
-function render(questionIndex) {
+render = (questionIndex) => {
     // Clears the page to render the questions 
     questions.innerHTML = '';
     options.innerHTML = '';
@@ -117,7 +118,7 @@ function render(questionIndex) {
     }
 }
 //worked with TA to move the quiz to the next question upon userInput
-function checkAnswer(event) {
+const checkAnswer = (event) => {
     var userValue = event.target.textContent;
     if (userValue === question[questionIndex].correctAnswer) {
         questionIndex++;
@@ -131,7 +132,7 @@ function checkAnswer(event) {
     score += secondsLeft
 }
 
-function endQuiz() {
+const endQuiz = () => {
     questions.innerHTML = '';
     currentTime.innerHTML = '';
 
@@ -171,7 +172,7 @@ function endQuiz() {
 
     }
     // Label for initials input
-    var generateLabel = document.createElement("label");
+    var generateLabel = document.createElement('label');
     generateLabel.setAttribute('class', 'generateLabel');
     generateLabel.textContent = 'Users Initials: ';
 
@@ -188,11 +189,11 @@ function endQuiz() {
     // Submit
     var generateSubmit = document.createElement('button');
     generateSubmit.setAttribute('type', 'class', 'submit');
-    generateSubmit.textContent = 'Save';
+    generateSubmit.textContent = 'Submit';
 
     questions.appendChild(generateSubmit);
 
-    generateSubmit.addEventListener('click', function () {
+    generateSubmit.addEventListener('click', () => {
         var initials = generateInput.value;
 
         if (initials === '') {
@@ -216,14 +217,14 @@ function endQuiz() {
 
         questions.appendChild(generateBtn);
 
-        generateBtn.addEventListener('click', function () {
+        generateBtn.addEventListener('click', () => {
             questionIndex = 0;
             secondsLeft = 50;
             score = 0;
             numCorrect = 0;
             render(questionIndex);
             if (secondsLeft) {
-                timeOut = setInterval(function () {
+                timeOut = setInterval(() => {
                     secondsLeft--;
                     currentTime.textContent = `Time: ${secondsLeft}`;
                     if (questionIndex >= question.length) {
@@ -240,3 +241,14 @@ function endQuiz() {
         })
     });
 };
+highscore.addEventListener('click', () => {
+    console.log('click')
+    questions.innerHTML = '';
+    options.innerHTML = '';
+
+    const highScores = JSON.parse(localStorage.getItem('highScores'));
+    console.log(highScores);
+    for (i = 0; i < highScores.length; i++) {
+        questions.textContent = 'Initials: ' + highScores[i].initials + '   Score: ' + highScores[i].score;
+    }
+})
